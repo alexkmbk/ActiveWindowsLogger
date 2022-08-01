@@ -1,0 +1,14 @@
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",1654005
+"ActiveWindowsLogger (Debugging) - Microsoft Visual Studio  (Administrator)",2303120
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",1353011
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",4500091
+"E:\DEV\c++\ActiveWindowsLogger_service\ActiveWindowsLogger\ActiveWindowsLogger.cpp - Notepad++ [Administrator]",4000222
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",5000
+"E:\DEV\c++\ActiveWindowsLogger\ActiveWindowsLogger\logs\logs_01.08.2022.txt - Notepad++ [Administrator]",2999
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",4000
+"E:\DEV\c++\ActiveWindowsLogger\ActiveWindowsLogger\logs\logs_01.08.2022.txt - Notepad++ [Administrator]",3000
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",7618
+"E:\DEV\c++\ActiveWindowsLogger\ActiveWindowsLogger\logs\logs_01.08.2022.txt - Notepad++ [Administrator]",2499
+"E:\DEV\c++\ActiveWindowsLogger_service\ActiveWindowsLogger\ActiveWindowsLogger.cpp - Notepad++ [Administrator]",1749
+"ActiveWindowsLogger (Running) - Microsoft Visual Studio  (Administrator)",2500
+"Telegram",1750
