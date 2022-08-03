@@ -36,3 +36,20 @@ std::wstring time_stamp(const std::wstring& fmt)
 	std::wcsftime(buf, sizeof(buf), fmt.c_str(), &bt);
 	return wstring(buf);
 }
+
+string to_utf8(const wstring &s)
+{
+	/*
+	wstring_convert<codecvt_utf8_utf16<wchar_t>> utf16conv;
+	return utf16conv.to_bytes(s);
+	*/
+
+	string utf8;
+	int len = WideCharToMultiByte(CP_UTF8, 0, s.c_str(), s.length(), NULL, 0, NULL, NULL);
+	if (len > 0)
+	{
+		utf8.resize(len);
+		WideCharToMultiByte(CP_UTF8, 0, s.c_str(), s.length(), &utf8[0], len, NULL, NULL);
+	}
+	return utf8;
+}
