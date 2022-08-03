@@ -19,7 +19,7 @@ inline std::tm localtime_xp(std::time_t timer)
 wstring CurrentDate() {
 	auto bt = localtime_xp(std::time(0));
 	wchar_t date[64];
-	swprintf_s(date, L"%02d.%02d.%04d", bt.tm_mday, bt.tm_mon + 1, bt.tm_year +
+	swprintf_s(date, L"%02d-%02d-%04d", bt.tm_mday, bt.tm_mon + 1, bt.tm_year +
 		1900);
 
 	return wstring(date);
