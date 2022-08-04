@@ -53,3 +53,31 @@ string to_utf8(const wstring &s)
 	}
 	return utf8;
 }
+
+#include <string>
+#include <sstream>
+#include <vector>
+std::vector<std::wstring> split(const std::wstring &s, wchar_t delim) {
+	std::wstringstream ss(s);
+	std::wstring item;
+	std::vector<std::wstring> elems;
+	while (std::getline(ss, item, delim)) {
+		elems.push_back(item);
+		// elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
+	}
+	return elems;
+}
+
+wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
+	wchar_t *pfile;
+	pfile = path + len;
+	for (; pfile > path; pfile--)
+	{
+		if ((*pfile == '\\') || (*pfile == '/'))
+		{
+			pfile++;
+			break;
+		}
+	}
+	return wstring(pfile, path - pfile);
+}
