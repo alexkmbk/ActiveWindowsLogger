@@ -68,7 +68,7 @@ std::vector<std::wstring> split(const std::wstring &s, wchar_t delim) {
 	return elems;
 }
 
-wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
+/*wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
 	wchar_t *pfile;
 	pfile = path + len;
 	for (; pfile > path; pfile--)
@@ -80,4 +80,4 @@ wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
 		}
 	}
 	return wstring(pfile, path - pfile);
-}
+}*/
