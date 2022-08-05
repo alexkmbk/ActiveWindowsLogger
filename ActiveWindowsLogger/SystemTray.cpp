@@ -5,7 +5,11 @@
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #pragma comment (lib, "comctl32")
 
+#ifdef _DEBUG 
 class __declspec(uuid("C805DD46-663F-426C-8C47-95EF8AB5BFE0")) PrinterIcon;
+#else 
+class __declspec(uuid("87C9AEE8-17BD-408A-A448-3AE7C83AFB22")) PrinterIcon;
+#endif
 
 BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
 {
@@ -14,7 +18,7 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
 	// add the icon, setting the icon, tooltip, and callback message.
 	// the icon will be identified with the GUID
 	nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP | NIF_GUID;
-	//nid.guidItem = 0;//__uuidof(PrinterIcon);
+	nid.guidItem = __uuidof(PrinterIcon);
 	nid.uCallbackMessage = WMAPP_NOTIFYCALLBACK;
 	LoadIconMetric(hInstance, MAKEINTRESOURCE(IDI_SMALL), LIM_SMALL, &nid.hIcon);
 	//LoadString(hInstance, IDS_TOOLTIP, nid.szTip, ARRAYSIZE(nid.szTip));
@@ -24,6 +28,14 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
 	// NOTIFYICON_VERSION_4 is prefered
 	nid.uVersion = NOTIFYICON_VERSION_4;
 	return Shell_NotifyIcon(NIM_SETVERSION, &nid);
+}
+
+BOOL DeleteNotificationIcon()
+{
+	NOTIFYICONDATA nid = { sizeof(nid) };
+	nid.uFlags = NIF_GUID;
+	nid.guidItem = __uuidof(PrinterIcon);
+	return Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
 void ShowContextMenu(HWND hwnd, HINSTANCE hInstance, POINT pt)
