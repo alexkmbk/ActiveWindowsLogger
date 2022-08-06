@@ -6,9 +6,9 @@
 #pragma comment (lib, "comctl32")
 
 #ifdef _DEBUG 
-class __declspec(uuid("C805DD46-663F-426C-8C47-95EF8AB5BFE0")) PrinterIcon;
+class __declspec(uuid("C805DD46-663F-426C-8C47-95EF8AB5BFE0")) SystemTrayIconUUID;
 #else 
-class __declspec(uuid("87C9AEE8-17BD-408A-A448-3AE7C83AFB22")) PrinterIcon;
+class __declspec(uuid("87C9AEE8-17BD-408A-A448-3AE7C83AFB22")) SystemTrayIconUUID;
 #endif
 
 BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
@@ -18,11 +18,11 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
 	// add the icon, setting the icon, tooltip, and callback message.
 	// the icon will be identified with the GUID
 	nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP | NIF_GUID;
-	nid.guidItem = __uuidof(PrinterIcon);
+	//nid.guidItem = __uuidof(SystemTrayIconUUID);
 	nid.uCallbackMessage = WMAPP_NOTIFYCALLBACK;
 	LoadIconMetric(hInstance, MAKEINTRESOURCE(IDI_SMALL), LIM_SMALL, &nid.hIcon);
-	//LoadString(hInstance, IDS_TOOLTIP, nid.szTip, ARRAYSIZE(nid.szTip));
-	wcscpy_s(nid.szTip, L"\Active windows logger");
+	LoadString(hInstance, IDS_APP_TITLE, nid.szTip, ARRAYSIZE(nid.szTip));
+	//wcscpy_s(nid.szTip, L"Active windows logger");
 	Shell_NotifyIcon(NIM_ADD, &nid);
 
 	// NOTIFYICON_VERSION_4 is prefered
@@ -34,7 +34,7 @@ BOOL DeleteNotificationIcon()
 {
 	NOTIFYICONDATA nid = { sizeof(nid) };
 	nid.uFlags = NIF_GUID;
-	nid.guidItem = __uuidof(PrinterIcon);
+	//nid.guidItem = __uuidof(SystemTrayIconUUID);
 	return Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
@@ -64,5 +64,18 @@ void ShowContextMenu(HWND hwnd, HINSTANCE hInstance, POINT pt)
 		}
 		DestroyMenu(hMenu);
 	}
+}
+
+BOOL ShowLowInkBalloon(HINSTANCE hInstance)
+{
+	// Display a low ink balloon message. This is a warning, so show the appropriate system icon.
+	NOTIFYICONDATA nid = { sizeof(nid) };
+	nid.uFlags = NIF_INFO | NIF_GUID;
+	//nid.guidItem = __uuidof(SystemTrayIconUUID);
+	// respect quiet time since this balloon did not come from a direct user action.
+	nid.dwInfoFlags = NIIF_WARNING | NIIF_RESPECT_QUIET_TIME;
+	//LoadString(hInstance, IDS_APP_TITLE, nid.szInfoTitle, ARRAYSIZE(nid.szInfoTitle));
+	LoadString(hInstance, IDS_APP_TITLE, nid.szInfo, ARRAYSIZE(nid.szInfo));
+	return Shell_NotifyIcon(NIM_MODIFY, &nid);
 }
 

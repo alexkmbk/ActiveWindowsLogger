@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="0.0.0.1" Manufacturer="WixEdit" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144">
+        <Package Description="Active windows logger" Comments="Active windows logger" InstallerVersion="200" Compressed="yes" />
+        <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder" Name="PFiles">
+                <Directory Name="ActiveWindowsLogger" Id="ACTIVEWINDOWSLOGGER">
+                    <Component Id="ACTIVEWINDOWSLOGGER.EXE" DiskId="1" Guid="12CC809E-B0D2-4F08-B2BC-CF335739DB50">
+                        <File Id="ACTIVEWINDOWSLOGGER.EXE" Name="ActiveWindowsLogger.exe" Source="..\Release\ActiveWindowsLogger.exe" />
+                        <RemoveFolder Id="RemoveAppDataActiveWindowsLogger" Directory="AppDataActiveWindowsLogger" On="uninstall" />
+                        <RemoveFolder Id="RemoveLogsFolder" On="uninstall" Directory="logs" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id="AppDataFolder" Name="AppDataFolder">
+                <Directory Id="AppDataActiveWindowsLogger" Name="ActiveWindowsLogger">
+                    <Directory Id="logs" Name="logs" />
+                </Directory>
+            </Directory>
+        </Directory>
+        <Feature Id="DefaultFeature" Title="Main Feature" Level="1">
+            <ComponentRef Id="ACTIVEWINDOWSLOGGER.EXE" />
+        </Feature>
+        <UI />
+    </Product>
+</Wix>

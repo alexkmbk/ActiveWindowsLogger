@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <shlobj_core.h>
 #include "utils.h"
 
 inline std::tm localtime_xp(std::time_t timer)
@@ -66,6 +67,18 @@ std::vector<std::wstring> split(const std::wstring &s, wchar_t delim) {
 		// elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
 	}
 	return elems;
+}
+
+filesystem::path GetAppDataFolderPath() {
+	filesystem::path path;
+	wchar_t* wcPath = NULL;
+    auto res = SHGetKnownFolderPath(FOLDERID_LocalAppData, 0,0, &wcPath);
+	if (res == S_OK) {
+		path.assign(wcPath);
+		CoTaskMemFree(wcPath);
+	}
+	return path;
+
 }
 
 /*wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
