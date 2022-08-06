@@ -81,6 +81,19 @@ filesystem::path GetAppDataFolderPath() {
 
 }
 
+bool CheckUniqueProcess() {
+
+	HANDLE hMutex = CreateMutexA(NULL, FALSE, "ActiveWindowsLogger");
+	DWORD dwMutexWaitResult = WaitForSingleObject(hMutex, 0);
+	CloseHandle(hMutex);
+	if (dwMutexWaitResult != WAIT_OBJECT_0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 /*wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
 	wchar_t *pfile;
 	pfile = path + len;
