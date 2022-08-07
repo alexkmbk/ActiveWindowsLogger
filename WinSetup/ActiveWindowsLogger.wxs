@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="0.0.0.1" Manufacturer="WixEdit" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Product Id="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="0.0.0.1" Manufacturer="alexkmbk" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144">
 		<Package Description="Active windows logger" Comments="Active windows logger" InstallerVersion="200" Compressed="yes" />
 		<Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
 		<Directory Id="TARGETDIR" Name="SourceDir">
@@ -29,7 +29,9 @@
 		<Feature Id="DefaultFeature" Title="Main Feature" Level="1">
 			<ComponentRef Id="ACTIVEWINDOWSLOGGER.EXE" />
 		</Feature>
-		<UI />		
+		<UI />	
+		<util:CloseApplication Id="CloseApp" CloseMessage="yes" Target="ActiveWindowsLogger.exe" RebootPrompt="no"/>
+		<!--<CustomAction Id="CloseTrayApp" ExeCommand="-exit" FileKey="ACTIVEWINDOWSLOGGER.EXE" Execute="immediate" Return="asyncNoWait" /> -->		
 		<CustomAction Id="EXECUTE_AFTER_FINALIZE"                  
               Execute="immediate" 
               Impersonate="no"
@@ -40,6 +42,30 @@
 		<InstallExecuteSequence>
 			<Custom Action="EXECUTE_AFTER_FINALIZE" After="InstallFinalize">NOT Installed</Custom>
 		</InstallExecuteSequence>
+		
+		<InstallExecuteSequence>
+			<Custom Action="WixCloseApplications" Before="InstallValidate">REMOVE = "ALL"</Custom>
+		</InstallExecuteSequence>
 
+		<!--		<Custom Before="InstallInitialize" Action="WixCloseApplications">REMOVE = "ALL"</Custom>
+
+
+		<InstallExecuteSequence>
+			<Custom Action="CloseTrayApp" Before="InstallInitialize" />
+			<Custom Action="WixCloseApplications" Before="InstallInitialize">REMOVE = "ALL"</Custom>
+		</InstallExecuteSequence>
+
+		<InstallExecuteSequence>
+			<Custom Action='MyProcess.TaskKill' Before='InstallInitialize'/>
+		</InstallExecuteSequence>
+
+		<Property Id="WixQuietExecCmdLine" 
+          Value='"[WindowsFolder]\System32\taskkill.exe" /IM ActiveWindowsLogger.exe'/>
+		<CustomAction Id="QtExecExample" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="check"/>
+		
+		<InstallExecuteSequence>
+			<Custom Action="QtExecExample" Before="InstallValidate"/>
+		</InstallExecuteSequence>
+-->	
 	</Product>
 </Wix>
