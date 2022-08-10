@@ -1,0 +1,1 @@
+chrome,foobar2000,Telegram,devenv,firefox,procexp64
