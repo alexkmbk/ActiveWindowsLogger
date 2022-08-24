@@ -94,6 +94,16 @@ bool CheckUniqueProcess() {
 	return true;
 }
 
+void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to) {
+	if (from.empty())
+		return;
+	size_t start_pos = 0;
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+	}
+}
+
 /*wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
 	wchar_t *pfile;
 	pfile = path + len;
