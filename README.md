@@ -15,7 +15,7 @@ The logs are stored in CSV files with 4 columns:
 
 The CSV files location is [%APPDATA%]\ActiveWindowsLogger\logs
 
-for each day will be created separate log file:
+For each day will be created separate log file:
 
 ![logs_screenshot.png](https://github.com/alexkmbk/ActiveWindowsLogger/blob/master/logs_screenshot.png)
 
