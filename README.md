@@ -8,9 +8,15 @@ The logs are stored in CSV files with 4 columns:
 -Window title   
 -Time in milliseconds   
 
-![alt text](https://github.com/alexkmbk/ActiveWindowsLogger/blob/master/CSV_Screenshot.png)
+![CSV_Screenshot.png](https://github.com/alexkmbk/ActiveWindowsLogger/blob/master/CSV_Screenshot.png)
 
 ![example.csv](https://github.com/alexkmbk/ActiveWindowsLogger/blob/master/example.csv)
 
 
 The CSV files location is [%APPDATA%]\ActiveWindowsLogger\logs
+
+For each day will be created separate log file:
+
+![logs_screenshot.png](https://github.com/alexkmbk/ActiveWindowsLogger/blob/master/logs_screenshot.png)
+
+
