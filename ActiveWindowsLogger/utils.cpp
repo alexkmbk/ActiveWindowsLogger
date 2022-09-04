@@ -104,6 +104,21 @@ void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring&
 	}
 }
 
+//
+// Returns the real parent window
+// Same as GetParent(), but doesn't return the owner
+//
+HWND GetRealParent(HWND hWnd)
+{
+	HWND hParent;
+
+	hParent = GetAncestor(hWnd, GA_PARENT);
+	if (!hParent || hParent == GetDesktopWindow())
+		return NULL;
+
+	return hParent;
+}
+
 /*wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
 	wchar_t *pfile;
 	pfile = path + len;

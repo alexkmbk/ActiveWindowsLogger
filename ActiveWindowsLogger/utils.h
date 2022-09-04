@@ -20,3 +20,4 @@ std::vector<std::wstring> split(const std::wstring &s, wchar_t delim);
 filesystem::path GetAppDataFolderPath();
 bool CheckUniqueProcess();
 void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to);
+HWND GetRealParent(HWND hWnd);
