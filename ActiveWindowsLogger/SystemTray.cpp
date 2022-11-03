@@ -11,7 +11,7 @@ class __declspec(uuid("C805DD46-663F-426C-8C47-95EF8AB5BFE0")) SystemTrayIconUUI
 class __declspec(uuid("7E17ADC0-2E82-4491-9B9B-4E9B99CCE5B2")) SystemTrayIconUUID;
 #endif
 
-BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
+BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance, bool bPaused, bool bUpdate)
 {
 	NOTIFYICONDATA nid = { sizeof(nid) };
 	nid.hWnd = hwnd;
@@ -20,10 +20,10 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
 	nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP | NIF_GUID;
 	nid.guidItem = __uuidof(SystemTrayIconUUID);
 	nid.uCallbackMessage = WMAPP_NOTIFYCALLBACK;
-	LoadIconMetric(hInstance, MAKEINTRESOURCE(IDI_SMALL), LIM_SMALL, &nid.hIcon);
+	LoadIconMetric(hInstance, MAKEINTRESOURCE(bPaused ? IDI_SMALL_P : IDI_SMALL), LIM_SMALL, &nid.hIcon);
 	LoadString(hInstance, IDS_APP_TITLE, nid.szTip, ARRAYSIZE(nid.szTip));
 	//wcscpy_s(nid.szTip, L"Active windows logger");
-	Shell_NotifyIcon(NIM_ADD, &nid);
+	Shell_NotifyIcon(bUpdate ? NIM_MODIFY : NIM_ADD, &nid);
 
 	// NOTIFYICON_VERSION_4 is prefered
 	nid.uVersion = NOTIFYICON_VERSION_4;
@@ -33,6 +33,7 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance)
 		nid.guidItem = GUID();
 		res = Shell_NotifyIcon(NIM_SETVERSION, &nid);
 	}
+	DestroyIcon(nid.hIcon);
 	return res;
 }
 
@@ -44,9 +45,16 @@ BOOL DeleteNotificationIcon()
 	return Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
-void ShowContextMenu(HWND hwnd, HINSTANCE hInstance, POINT pt)
+int ShowContextMenu(HWND hwnd, HINSTANCE hInstance, POINT pt, bool bPaused)
 {
-	HMENU hMenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDC_CONTEXTMENU));
+	HMENU hMenu;
+	int res = 0;
+
+	if (bPaused) 
+		hMenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDC_CONTEXTMENU_P));
+	else
+		hMenu = LoadMenu(hInstance, MAKEINTRESOURCE(IDC_CONTEXTMENU));
+	
 	if (hMenu)
 	{
 		HMENU hSubMenu = GetSubMenu(hMenu, 0);
@@ -56,7 +64,7 @@ void ShowContextMenu(HWND hwnd, HINSTANCE hInstance, POINT pt)
 			SetForegroundWindow(hwnd);
 
 			// respect menu drop alignment
-			UINT uFlags = TPM_RIGHTBUTTON;
+			UINT uFlags = TPM_RIGHTBUTTON | TPM_RETURNCMD;
 			if (GetSystemMetrics(SM_MENUDROPALIGNMENT) != 0)
 			{
 				uFlags |= TPM_RIGHTALIGN;
@@ -66,10 +74,13 @@ void ShowContextMenu(HWND hwnd, HINSTANCE hInstance, POINT pt)
 				uFlags |= TPM_LEFTALIGN;
 			}
 
-			TrackPopupMenuEx(hSubMenu, uFlags, pt.x, pt.y, hwnd, NULL);
+			res = TrackPopupMenuEx(hSubMenu, uFlags, pt.x, pt.y, hwnd, NULL);
+			DestroyMenu(hSubMenu);
 		}
 		DestroyMenu(hMenu);
 	}
+
+	return res;
 }
 
 BOOL ShowLowInkBalloon(HINSTANCE hInstance)
