@@ -22,7 +22,6 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance, bool bPaused, bool bUpd
 	nid.uCallbackMessage = WMAPP_NOTIFYCALLBACK;
 	LoadIconMetric(hInstance, MAKEINTRESOURCE(bPaused ? IDI_SMALL_P : IDI_SMALL), LIM_SMALL, &nid.hIcon);
 	LoadString(hInstance, IDS_APP_TITLE, nid.szTip, ARRAYSIZE(nid.szTip));
-	//wcscpy_s(nid.szTip, L"Active windows logger");
 	Shell_NotifyIcon(bUpdate ? NIM_MODIFY : NIM_ADD, &nid);
 
 	// NOTIFYICON_VERSION_4 is prefered
@@ -91,7 +90,6 @@ BOOL ShowLowInkBalloon(HINSTANCE hInstance)
 	nid.guidItem = __uuidof(SystemTrayIconUUID);
 	// respect quiet time since this balloon did not come from a direct user action.
 	nid.dwInfoFlags = NIIF_WARNING | NIIF_RESPECT_QUIET_TIME;
-	//LoadString(hInstance, IDS_APP_TITLE, nid.szInfoTitle, ARRAYSIZE(nid.szInfoTitle));
 	LoadString(hInstance, IDS_APP_TITLE, nid.szInfo, ARRAYSIZE(nid.szInfo));
 	return Shell_NotifyIcon(NIM_MODIFY, &nid);
 }

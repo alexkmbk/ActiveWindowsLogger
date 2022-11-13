@@ -40,11 +40,6 @@ std::wstring time_stamp(const std::wstring& fmt)
 
 string to_utf8(const wstring &s)
 {
-	/*
-	wstring_convert<codecvt_utf8_utf16<wchar_t>> utf16conv;
-	return utf16conv.to_bytes(s);
-	*/
-
 	string utf8;
 	int len = WideCharToMultiByte(CP_UTF8, 0, s.c_str(), s.length(), NULL, 0, NULL, NULL);
 	if (len > 0)
@@ -64,7 +59,6 @@ std::vector<std::wstring> split(const std::wstring &s, wchar_t delim) {
 	std::vector<std::wstring> elems;
 	while (std::getline(ss, item, delim)) {
 		elems.push_back(item);
-		// elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
 	}
 	return elems;
 }
@@ -118,17 +112,3 @@ HWND GetRealParent(HWND hWnd)
 
 	return hParent;
 }
-
-/*wstring wextractFileNameFromPath(wchar_t* path, size_t len) {
-	wchar_t *pfile;
-	pfile = path + len;
-	for (; pfile > path; pfile--)
-	{
-		if ((*pfile == '\\') || (*pfile == '/'))
-		{
-			pfile++;
-			break;
-		}
-	}
-	return wstring(pfile, path - pfile);
-}*/
