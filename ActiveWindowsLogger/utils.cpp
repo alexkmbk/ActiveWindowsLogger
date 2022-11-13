@@ -75,19 +75,6 @@ filesystem::path GetAppDataFolderPath() {
 
 }
 
-bool CheckUniqueProcess() {
-
-	HANDLE hMutex = CreateMutexA(NULL, FALSE, "ActiveWindowsLogger");
-	DWORD dwMutexWaitResult = WaitForSingleObject(hMutex, 0);
-	CloseHandle(hMutex);
-	if (dwMutexWaitResult != WAIT_OBJECT_0)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to) {
 	if (from.empty())
 		return;

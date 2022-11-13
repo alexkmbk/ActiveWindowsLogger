@@ -18,6 +18,5 @@ string to_utf8(const wstring &s);
 inline std::tm localtime_xp(std::time_t timer);
 std::vector<std::wstring> split(const std::wstring &s, wchar_t delim);
 filesystem::path GetAppDataFolderPath();
-bool CheckUniqueProcess();
 void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to);
 HWND GetRealParent(HWND hWnd);
