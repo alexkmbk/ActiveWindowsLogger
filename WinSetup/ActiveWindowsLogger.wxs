@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-	<Product Id="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="1.0.0.1" Manufacturer="alexkmbk" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144">
+	<Product Id="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="1.0.1.1" Manufacturer="alexkmbk" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144">
 		<Package Description="Active windows logger" Comments="Active windows logger" InstallerVersion="200" Compressed="yes" />
 		<Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
 		<Directory Id="TARGETDIR" Name="SourceDir">

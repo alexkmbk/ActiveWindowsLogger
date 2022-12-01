@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 logs*.txt
+/ActiveWindowsLogger.zip
+/Screenshot_1.png
