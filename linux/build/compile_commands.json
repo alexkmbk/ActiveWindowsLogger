@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/main.cpp",
+  "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/main.cpp"
+}
+]
