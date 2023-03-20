@@ -94,6 +94,11 @@
 				"backtrace" : 2,
 				"fragment" : "-lxcb-ewmh",
 				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-lXss",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
