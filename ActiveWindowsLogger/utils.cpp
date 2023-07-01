@@ -99,3 +99,20 @@ HWND GetRealParent(HWND hWnd)
 
 	return hParent;
 }
+
+bool IsWindowsVersionOrGreater(WORD wMajorVersion, WORD wMinorVersion)
+{
+	OSVERSIONINFOEXW osvi = {};
+	osvi.dwOSVersionInfoSize = sizeof(osvi);
+	DWORDLONG        const dwlConditionMask = VerSetConditionMask(
+		VerSetConditionMask(
+			VerSetConditionMask(
+				0, VER_MAJORVERSION, VER_GREATER_EQUAL),
+			VER_MINORVERSION, VER_GREATER_EQUAL),
+		VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL);
+
+	osvi.dwMajorVersion = wMajorVersion;
+	osvi.dwMinorVersion = wMinorVersion;
+
+	return VerifyVersionInfoW(&osvi, VER_MAJORVERSION | VER_MINORVERSION, dwlConditionMask) != FALSE;
+}

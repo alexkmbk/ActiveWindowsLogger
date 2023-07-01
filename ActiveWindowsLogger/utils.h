@@ -20,3 +20,4 @@ std::vector<std::wstring> split(const std::wstring &s, wchar_t delim);
 filesystem::path GetAppDataFolderPath();
 void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to);
 HWND GetRealParent(HWND hWnd);
+bool IsWindowsVersionOrGreater(WORD wMajorVersion, WORD wMinorVersion);
