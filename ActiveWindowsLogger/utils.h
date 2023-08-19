@@ -21,3 +21,4 @@ filesystem::path GetAppDataFolderPath();
 void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring& to);
 HWND GetRealParent(HWND hWnd);
 bool IsWindowsVersionOrGreater(WORD wMajorVersion, WORD wMinorVersion);
+std::string GetLastErrorAsString();
