@@ -262,3 +262,9 @@ __pycache__/
 logs*.txt
 /ActiveWindowsLogger.zip
 /Screenshot_1.png
+/InfostartPackage/ActiveWindowsLogger.zip
+/InfostartPackage/ActiveWindowsLogger.msi
+/InfostartPackage/ActiveWindowsLogger.exe
+/WinSetup/ActiveWindowsLogger.wixpdb
+/WinSetup/ActiveWindowsLogger.wixobj
+/WinSetup/ActiveWindowsLogger.msi
