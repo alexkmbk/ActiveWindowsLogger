@@ -65,19 +65,30 @@ void write(const chrono::high_resolution_clock::time_point current_time, chrono:
 
 void handle_signal(int sig)
 {
-  string sWindowTitle = "";
-  string sProcessName = "";
-  if (getActiveWindowAndProcessName(sWindowTitle, sProcessName))
+  string nextWindowName = "";
+  string processName = "";
+  if (getActiveWindowAndProcessName(nextWindowName, processName))
   {
-
-    const auto end_time = std::chrono::high_resolution_clock::now();                                               // current timestamp
-    auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - iCurrentWindowStartTime).count(); // period
-
-    const auto sinceLastWritePeriod = std::chrono::duration_cast<std::chrono::seconds>(end_time - lastWrite).count();
-    if (time > 0 && ((sinceLastWritePeriod > 60) || (sWindowTitle.compare(sCurrentWindowName) != 0)))
+    if (sCurrentProcessName.length() > 0 || sCurrentWindowName.length() > 0)
     {
-      write(end_time, time);
+      const auto end_time = std::chrono::high_resolution_clock::now();                                               // current timestamp
+      auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - iCurrentWindowStartTime).count(); // period
+
+      const auto sinceLastWritePeriod = std::chrono::duration_cast<std::chrono::seconds>(end_time - lastWrite).count();
+      if (time > 0 && ((sinceLastWritePeriod > 60) || (nextWindowName.compare(sCurrentWindowName) != 0)))
+      {
+        write(end_time, time);
+      }
     }
+    else {
+				if (sCurrentWindowName.length() == 0 && nextWindowName.length() > 0) {
+					sCurrentWindowName.assign(nextWindowName);
+				}
+				if (sCurrentProcessName.length() == 0 && processName.length() > 0) {
+					fs::path p(processName);
+					sCurrentProcessName.assign(p.stem().string());
+				}
+			}
   }
 }
 
