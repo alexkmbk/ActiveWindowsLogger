@@ -8,95 +8,188 @@
 #include <locale.h>
 
 #include <iostream>
-#include <string.h>
-
-#include <X11/Xlib.h>
-#include <X11/extensions/scrnsaver.h>
-
-// #include <X11/Xlib.h>           // `apt-get install libx11-dev`
-// #include <X11/Xmu/WinUtil.h>    // `apt-get install libxmu-dev`
-
-#include <xcb/xcb.h>
-#include <xcb/xcb_ewmh.h>
-#include <xcb/xcb_icccm.h>
+#include <string>
 
 #include <cstdlib>
 #include <csignal>
 #include <unistd.h>
 #include <sys/time.h>
 
+#include <stdio.h>
+#include <string>
+#include <fstream>
+#include <filesystem>
+#include <sstream>
+
+
+#include "./lib/SimpleIni/SimpleIni.h"
+#include "utils.h"
+#include "xutils.h"
+
+//#include <glib-2.0/glib-object.h>
+//#include <libupower-glib/upower.h>
+
+
+//#include <upower.h>
+
 // Bool xerror = False;
 
-using std::string;
+namespace fs = std::filesystem;
 
-bool getActiveWindowAndProcessName(string &windowTitle, string &processName)
-{
-  xcb_connection_t *connection = xcb_connect(nullptr, nullptr);
-  if (xcb_connection_has_error(connection))
-  {
-    std::cerr << "Failed to connect to X server." << std::endl;
-    return false;
-  }
+using namespace std;
 
-  xcb_screen_t *screen = xcb_setup_roots_iterator(xcb_get_setup(connection)).data;
-  xcb_window_t root = screen->root;
+string sCurrentWindowName = "";
+string sCurrentProcessName = "";
+bool bPaused = false;
 
-  xcb_ewmh_connection_t ewmh_connection;
+std::chrono::high_resolution_clock::time_point iCurrentWindowStartTime = std::chrono::high_resolution_clock::now();
+auto lastFlush = std::chrono::high_resolution_clock::now();
+auto lastWrite = std::chrono::high_resolution_clock::now();
 
-  xcb_intern_atom_cookie_t *atom_cookie = xcb_ewmh_init_atoms(connection, &ewmh_connection);
-  if (!xcb_ewmh_init_atoms_replies(&ewmh_connection, atom_cookie, nullptr))
-  {
-    std::cerr << "Failed to initialize EWMH atoms." << std::endl;
-    return 1;
-  }
+std::ofstream oFile;
 
-  xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window(&ewmh_connection, 0);
-  xcb_window_t window = XCB_NONE;
-  xcb_generic_error_t *error = nullptr;
-  if (xcb_ewmh_get_active_window_reply(&ewmh_connection, cookie, &window, &error) != 1)
-  {
-    std::cerr << "Failed to get active window." << std::endl;
-  }
-  else
-  {
-    std::cout << "Active window XID: " << window << std::endl;
-  }
+fs::path currentDir = std::filesystem::current_path();
+fs::path logsDir = "";
+fs::path settingsFile = "";
+string separator = ",";
+string fileName = time_stamp("%F") + ".csv";
 
-  xcb_icccm_get_text_property_reply_t wm_name_reply;
-  if (xcb_icccm_get_wm_name_reply(
-          connection, xcb_icccm_get_wm_name(connection, window), &wm_name_reply, nullptr) == 1)
-  {
-    std::cout << "Active window title: " << wm_name_reply.name << std::endl;
-    windowTitle.assign(wm_name_reply.name);
-    xcb_icccm_get_text_property_reply_wipe(&wm_name_reply);
-  }
+vector<std::string> filters;
+int iStopLoggingwhenInactiveInterval = 5;
 
-  xcb_icccm_get_wm_class_reply_t wm_class_reply;
-  if (xcb_icccm_get_wm_class_reply(
-          connection, xcb_icccm_get_wm_class(connection, window), &wm_class_reply, nullptr) == 1)
-  {
-    std::cout << "Active process name: " << wm_class_reply.class_name << std::endl;
-    processName.assign(wm_class_reply.class_name);
-    xcb_icccm_get_wm_class_reply_wipe(&wm_class_reply);
-  }
+auto currentDay = localtime_xp(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())).tm_mday;
+auto lastMove = std::chrono::system_clock::now();
+int lastCursotPos;
 
-  xcb_ewmh_connection_wipe(&ewmh_connection);
-  xcb_disconnect(connection);
-  return 0;
-}
+void write(const chrono::high_resolution_clock::time_point current_time, chrono::milliseconds::rep time);
 
 void handle_signal(int sig)
 {
-  std::cout << "Received signal: " << sig << std::endl;
-  string windowTitle = "";
-  string processName = "";
-  getActiveWindowAndProcessName(windowTitle, processName);
+  string sWindowTitle = "";
+  string sProcessName = "";
+  if (getActiveWindowAndProcessName(sWindowTitle, sProcessName))
+  {
+
+    const auto end_time = std::chrono::high_resolution_clock::now();                                               // current timestamp
+    auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - iCurrentWindowStartTime).count(); // period
+
+    const auto sinceLastWritePeriod = std::chrono::duration_cast<std::chrono::seconds>(end_time - lastWrite).count();
+    if (time > 0 && ((sinceLastWritePeriod > 60) || (sWindowTitle.compare(sCurrentWindowName) != 0)))
+    {
+      write(end_time, time);
+    }
+  }
 }
+
+void readSettings() {
+
+	if (!fs::exists(settingsFile)) {
+		return;
+	}
+	CSimpleIniA ini;
+	ini.SetUnicode(true);
+	ini.LoadFile(settingsFile.c_str());
+	filters = split(ini.GetValue("Filters", "ProgramsFilter", ""), ',');
+	separator = ini.GetValue("LogsFormat", "Separator", ",");
+	if (separator.size() == 0) {
+		separator = ",";
+	}
+	iStopLoggingwhenInactiveInterval = ini.GetLongValue("Tracking", "StopLoggingwhenInactiveInterval", 5);
+}
+
+
+void write(const chrono::high_resolution_clock::time_point current_time, chrono::milliseconds::rep time) {
+
+	// sometimes, when the PC is waking up after sleep mode, the timer could have value from the beginning of sleeping
+	if (time > 62000) {
+		time = 62000;
+	}
+
+	if (sCurrentProcessName.length() != 0 || sCurrentWindowName.length() != 0) {
+		stringstream line;
+		line << time_stamp() << separator;
+
+		replaceAll(sCurrentProcessName, "\"", "\"\"");
+		line << L"\"" << sCurrentProcessName << "\"" << separator;
+
+		replaceAll(sCurrentWindowName, "\"", "\"\"");
+		line << "\"" << sCurrentWindowName << "\"" << separator;
+
+		line << time;
+		line << endl;
+
+		// if it is the next day, we should start a new file
+		auto day = localtime_xp(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())).tm_mday;
+		if (day != currentDay) {
+			currentDay = day;
+			oFile.close();
+			fileName = (logsDir / (time_stamp("%F") + ".csv")).string();
+			oFile.open("fileName", std::ios::app);
+			//string sep_utf8 = to_utf8(separator);
+			oFile << "Timestamp" << separator << "Program" << separator << "WindowTitle" << separator << "Time" << endl;
+		}
+
+		if (oFile.bad() || !oFile.good() || oFile.fail()) {
+			oFile.close();
+			oFile.open("fileName", std::ios::app);
+		}
+		if (!oFile.is_open()) {
+			oFile.open("fileName", std::ios::app);
+		}
+
+		if (std::find(filters.begin(), filters.end(), sCurrentProcessName) == filters.end()) {
+			oFile << line.str();
+			lastWrite = current_time;
+		}
+	}
+	// flush the data to the file every 5 seconds
+	if (std::chrono::duration_cast<std::chrono::seconds>(current_time - lastFlush).count() > 5) {
+		oFile.flush();
+		lastFlush = current_time;
+	}
+
+}
+
 
 int main(void)
 {
   setlocale(LC_ALL, ""); // see man locale
 
+auto AppDataFolder = GetAppDataFolderPath();
+	if (AppDataFolder.native().size() > 0) {
+		AppDataFolder = AppDataFolder / L"ActiveWindowsLogger";
+
+		if (!fs::exists(AppDataFolder)) {
+			fs::create_directory(AppDataFolder);
+		}
+	}
+
+	if (fs::exists(AppDataFolder)) {
+		logsDir = AppDataFolder / "logs";
+	}
+	else {
+		logsDir = currentDir / L"logs";
+	}
+
+	if (!fs::exists(logsDir)) {
+		if (!fs::create_directory(logsDir)) {
+			return -1;
+		}
+	}
+	settingsFile = logsDir / L"settings.ini";
+	readSettings();
+
+	fileName = (logsDir / fileName).string();
+	oFile.open(fileName, std::ios::app);
+
+	if (!oFile.is_open()) {
+		return -1;
+	}
+	if (std::filesystem::file_size(fileName) == 0) {
+		//string sep_utf8 = to_utf8(separator);
+		oFile << "Timestamp" << separator << "Program" << separator << "WindowTitle" << separator << "Time" << endl;
+	}
+	
   Display *display = XOpenDisplay(NULL);
 
   if (!display)

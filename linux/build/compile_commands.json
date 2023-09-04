@@ -3,5 +3,20 @@
   "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
   "command": "/usr/bin/g++   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/main.cpp",
   "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/main.cpp"
+},
+{
+  "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.cpp",
+  "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.cpp"
+},
+{
+  "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/xutils.cpp",
+  "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/xutils.cpp"
+},
+{
+  "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
+  "command": "/usr/bin/gcc   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c",
+  "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c"
 }
 ]

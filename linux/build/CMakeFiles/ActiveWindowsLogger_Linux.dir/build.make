@@ -83,17 +83,65 @@ CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/c++/ActiveWindowsLogger/linux/main.cpp -o CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.s
 
+CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o: CMakeFiles/ActiveWindowsLogger_Linux.dir/flags.make
+CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o: ../utils.cpp
+CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o: CMakeFiles/ActiveWindowsLogger_Linux.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/c++/ActiveWindowsLogger/linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o -MF CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o.d -o CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.cpp
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.cpp > CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.i
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.cpp -o CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.s
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o: CMakeFiles/ActiveWindowsLogger_Linux.dir/flags.make
+CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o: ../xutils.cpp
+CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o: CMakeFiles/ActiveWindowsLogger_Linux.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/c++/ActiveWindowsLogger/linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o -MF CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o.d -o CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/xutils.cpp
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/hgfs/c++/ActiveWindowsLogger/linux/xutils.cpp > CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.i
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/hgfs/c++/ActiveWindowsLogger/linux/xutils.cpp -o CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.s
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o: CMakeFiles/ActiveWindowsLogger_Linux.dir/flags.make
+CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o: ../ConvertUTF.c
+CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o: CMakeFiles/ActiveWindowsLogger_Linux.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/hgfs/c++/ActiveWindowsLogger/linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o -MF CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o.d -o CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.i"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c > CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.i
+
+CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.s"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c -o CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.s
+
 # Object files for target ActiveWindowsLogger_Linux
 ActiveWindowsLogger_Linux_OBJECTS = \
-"CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o"
+"CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o" \
+"CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o" \
+"CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o" \
+"CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o"
 
 # External object files for target ActiveWindowsLogger_Linux
 ActiveWindowsLogger_Linux_EXTERNAL_OBJECTS =
 
 ActiveWindowsLogger_Linux: CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o
+ActiveWindowsLogger_Linux: CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o
+ActiveWindowsLogger_Linux: CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o
+ActiveWindowsLogger_Linux: CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o
 ActiveWindowsLogger_Linux: CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make
 ActiveWindowsLogger_Linux: CMakeFiles/ActiveWindowsLogger_Linux.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/hgfs/c++/ActiveWindowsLogger/linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ActiveWindowsLogger_Linux"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/hgfs/c++/ActiveWindowsLogger/linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ActiveWindowsLogger_Linux"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ActiveWindowsLogger_Linux.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

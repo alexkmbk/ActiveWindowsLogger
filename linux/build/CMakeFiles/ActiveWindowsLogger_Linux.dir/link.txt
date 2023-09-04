@@ -1,1 +1,1 @@
-/usr/bin/g++ -g -rdynamic CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o -o ActiveWindowsLogger_Linux  -lXext -lX11 -lXmuu -lxcb -lxcb-icccm -lxcb-ewmh -lXss 
+/usr/bin/g++ -g -rdynamic CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o -o ActiveWindowsLogger_Linux  -lXext -lX11 -lXmuu -lxcb -lxcb-icccm -lxcb-ewmh -lXss 

@@ -523,6 +523,30 @@ ActiveWindowsLogger_Linux/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/build
 .PHONY : ActiveWindowsLogger_Linux/fast
 
+ConvertUTF.o: ConvertUTF.c.o
+.PHONY : ConvertUTF.o
+
+# target to build an object file
+ConvertUTF.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o
+.PHONY : ConvertUTF.c.o
+
+ConvertUTF.i: ConvertUTF.c.i
+.PHONY : ConvertUTF.i
+
+# target to preprocess a source file
+ConvertUTF.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.i
+.PHONY : ConvertUTF.c.i
+
+ConvertUTF.s: ConvertUTF.c.s
+.PHONY : ConvertUTF.s
+
+# target to generate assembly for a file
+ConvertUTF.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.s
+.PHONY : ConvertUTF.c.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -546,6 +570,54 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+utils.o: utils.cpp.o
+.PHONY : utils.o
+
+# target to build an object file
+utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o
+.PHONY : utils.cpp.o
+
+utils.i: utils.cpp.i
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.s
+.PHONY : utils.cpp.s
+
+xutils.o: xutils.cpp.o
+.PHONY : xutils.o
+
+# target to build an object file
+xutils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o
+.PHONY : xutils.cpp.o
+
+xutils.i: xutils.cpp.i
+.PHONY : xutils.i
+
+# target to preprocess a source file
+xutils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.i
+.PHONY : xutils.cpp.i
+
+xutils.s: xutils.cpp.s
+.PHONY : xutils.s
+
+# target to generate assembly for a file
+xutils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.s
+.PHONY : xutils.cpp.s
 
 # Help Target
 help:
@@ -587,9 +659,18 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... ActiveWindowsLogger_Linux"
+	@echo "... ConvertUTF.o"
+	@echo "... ConvertUTF.i"
+	@echo "... ConvertUTF.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
+	@echo "... xutils.o"
+	@echo "... xutils.i"
+	@echo "... xutils.s"
 .PHONY : help
 
 
