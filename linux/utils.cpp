@@ -71,9 +71,9 @@ std::vector<std::string> split(const std::string &s, char delim) {
 #ifdef _WIN32
 #include <shlobj_core.h>
 #endif
-filesystem::path GetAppDataFolderPath()
+std::filesystem::path GetAppDataFolderPath()
 {
-	filesystem::path path;
+	std::filesystem::path path;
 	wchar_t *wcPath = NULL;
 
 #ifdef _WIN32
@@ -99,4 +99,35 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
 		str.replace(start_pos, from.length(), to);
 		start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
 	}
+}
+
+int processExist(const string processFullPath)
+{
+	// Путь к файлу блокировки (можно выбрать любой путь)
+	const string lockFile = "/tmp" / std::filesystem::path(processFullPath + ".lock").stem();
+
+	// Попытка открыть файл блокировки
+	int lockFileDescriptor = open(lockFile.c_str(), O_RDWR | O_CREAT, 0644);
+
+	// Попытка установить эксклюзивную блокировку на файле
+	if (lockf(lockFileDescriptor, F_TLOCK, 0) == -1)
+	{
+		// Файл блокировки уже заблокирован, что может указывать на запущенную программу
+		close(lockFileDescriptor);
+		return 0;
+	}
+	return lockFileDescriptor;
+}
+
+void releaseLockFile(int lockFileID, const string processFullPath)
+{
+	if (lockFileID != 0) {
+	lockf(lockFileID, F_ULOCK, 0);
+	close(lockFileID);
+	}
+
+	const string lockFile = "/tmp" / std::filesystem::path(processFullPath + ".lock").stem();
+
+	// Удаление файла блокировки
+	unlink(lockFile.c_str());
 }

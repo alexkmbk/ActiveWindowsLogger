@@ -18,5 +18,10 @@
   "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
   "command": "/usr/bin/gcc   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c",
   "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/ConvertUTF.c"
+},
+{
+  "directory": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/build",
+  "command": "/usr/bin/gcc   -g -o CMakeFiles/ActiveWindowsLogger_Linux.dir/messagebox.c.o -c /mnt/hgfs/c++/ActiveWindowsLogger/linux/messagebox.c",
+  "file": "/mnt/hgfs/c++/ActiveWindowsLogger/linux/messagebox.c"
 }
 ]

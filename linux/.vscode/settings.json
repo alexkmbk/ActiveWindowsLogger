@@ -55,6 +55,7 @@
         "map": "cpp",
         "ratio": "cpp",
         "iomanip": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "filesystem": "cpp"
     }
 }

@@ -229,14 +229,20 @@ CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o: \
  /usr/include/c++/11/bits/vector.tcc \
  /usr/include/c++/11/pstl/execution_defs.h \
  /mnt/hgfs/c++/ActiveWindowsLogger/linux/./lib/SimpleIni/ConvertUTF.h \
- /mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.h \
+ /mnt/hgfs/c++/ActiveWindowsLogger/linux/utils.h /usr/include/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
+ /usr/include/x86_64-linux-gnu/sys/file.h \
  /mnt/hgfs/c++/ActiveWindowsLogger/linux/xutils.h /usr/include/X11/Xlib.h \
  /usr/include/X11/X.h /usr/include/X11/Xfuncproto.h \
  /usr/include/X11/Xosdefs.h /usr/include/X11/extensions/scrnsaver.h \
  /usr/include/X11/extensions/saver.h /usr/include/xcb/xcb.h \
  /usr/include/x86_64-linux-gnu/sys/uio.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/uio-ext.h /usr/include/xcb/xproto.h \
  /usr/include/xcb/xcb.h /usr/include/xcb/xcb_ewmh.h \
- /usr/include/xcb/xcb_icccm.h
+ /usr/include/xcb/xcb_icccm.h \
+ /mnt/hgfs/c++/ActiveWindowsLogger/linux/messagebox.h

@@ -571,6 +571,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+messagebox.o: messagebox.c.o
+.PHONY : messagebox.o
+
+# target to build an object file
+messagebox.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/messagebox.c.o
+.PHONY : messagebox.c.o
+
+messagebox.i: messagebox.c.i
+.PHONY : messagebox.i
+
+# target to preprocess a source file
+messagebox.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/messagebox.c.i
+.PHONY : messagebox.c.i
+
+messagebox.s: messagebox.c.s
+.PHONY : messagebox.s
+
+# target to generate assembly for a file
+messagebox.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ActiveWindowsLogger_Linux.dir/build.make CMakeFiles/ActiveWindowsLogger_Linux.dir/messagebox.c.s
+.PHONY : messagebox.c.s
+
 utils.o: utils.cpp.o
 .PHONY : utils.o
 
@@ -665,6 +689,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... messagebox.o"
+	@echo "... messagebox.i"
+	@echo "... messagebox.s"
 	@echo "... utils.o"
 	@echo "... utils.i"
 	@echo "... utils.s"

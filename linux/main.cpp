@@ -21,10 +21,10 @@
 #include <filesystem>
 #include <sstream>
 
-
 #include "./lib/SimpleIni/SimpleIni.h"
 #include "utils.h"
 #include "xutils.h"
+#include "messagebox.h"
 
 //#include <glib-2.0/glib-object.h>
 //#include <libupower-glib/upower.h>
@@ -65,36 +65,56 @@ void write(const chrono::high_resolution_clock::time_point current_time, chrono:
 
 void handle_signal(int sig)
 {
-  string nextWindowName = "";
-  string processName = "";
-  if (getActiveWindowAndProcessName(nextWindowName, processName))
+  if (sig == SIGTERM || sig == SIGABRT || sig == SIGTSTP || sig == SIGINT || sig ==  SIGSTOP || sig ==  SIGKILL)
   {
-    if (sCurrentProcessName.length() > 0 || sCurrentWindowName.length() > 0)
-    {
-      const auto end_time = std::chrono::high_resolution_clock::now();                                               // current timestamp
-      auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - iCurrentWindowStartTime).count(); // period
+    Button buttons[1];
+    buttons[0].label = L"Ok";
+    buttons[0].result = 0;
+    int res = Messagebox("Active windows logger", L"SIGTERM!", buttons, 1);
 
-      const auto sinceLastWritePeriod = std::chrono::duration_cast<std::chrono::seconds>(end_time - lastWrite).count();
-      if (time > 0 && ((sinceLastWritePeriod > 60) || (nextWindowName.compare(sCurrentWindowName) != 0)))
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - iCurrentWindowStartTime).count();
+    write(end_time, time);
+    iCurrentWindowStartTime = end_time;
+  }
+  else // timer
+  {
+    string nextWindowName = "";
+    string processName = "";
+    if (getActiveWindowAndProcessName(nextWindowName, processName))
+    {
+
+      if (sCurrentProcessName.length() > 0 || sCurrentWindowName.length() > 0)
       {
-        write(end_time, time);
+        const auto end_time = std::chrono::high_resolution_clock::now();                                               // current timestamp
+        auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - iCurrentWindowStartTime).count(); // period
+
+        const auto sinceLastWritePeriod = std::chrono::duration_cast<std::chrono::seconds>(end_time - lastWrite).count();
+        if (time > 0 && ((sinceLastWritePeriod > 60) || (nextWindowName.compare(sCurrentWindowName) != 0)))
+        {
+          write(end_time, time);
+        }
+      }
+      else
+      {
+        if (sCurrentWindowName.length() == 0 && nextWindowName.length() > 0)
+        {
+          sCurrentWindowName.assign(nextWindowName);
+        }
+        if (sCurrentProcessName.length() == 0 && processName.length() > 0)
+        {
+          fs::path p(processName);
+          sCurrentProcessName.assign(p.stem().string());
+        }
       }
     }
-    else {
-				if (sCurrentWindowName.length() == 0 && nextWindowName.length() > 0) {
-					sCurrentWindowName.assign(nextWindowName);
-				}
-				if (sCurrentProcessName.length() == 0 && processName.length() > 0) {
-					fs::path p(processName);
-					sCurrentProcessName.assign(p.stem().string());
-				}
-			}
   }
 }
 
-void readSettings() {
+void readSettings()
+{
 
-	if (!fs::exists(settingsFile)) {
+  if (!fs::exists(settingsFile)) {
 		return;
 	}
 	CSimpleIniA ini;
@@ -108,7 +128,6 @@ void readSettings() {
 	iStopLoggingwhenInactiveInterval = ini.GetLongValue("Tracking", "StopLoggingwhenInactiveInterval", 5);
 }
 
-
 void write(const chrono::high_resolution_clock::time_point current_time, chrono::milliseconds::rep time) {
 
 	// sometimes, when the PC is waking up after sleep mode, the timer could have value from the beginning of sleeping
@@ -121,7 +140,7 @@ void write(const chrono::high_resolution_clock::time_point current_time, chrono:
 		line << time_stamp() << separator;
 
 		replaceAll(sCurrentProcessName, "\"", "\"\"");
-		line << L"\"" << sCurrentProcessName << "\"" << separator;
+		line << "\"" << sCurrentProcessName << "\"" << separator;
 
 		replaceAll(sCurrentWindowName, "\"", "\"\"");
 		line << "\"" << sCurrentWindowName << "\"" << separator;
@@ -162,9 +181,25 @@ void write(const chrono::high_resolution_clock::time_point current_time, chrono:
 }
 
 
-int main(void)
+int main(int argc, char* argv[])
 {
   setlocale(LC_ALL, ""); // see man locale
+
+  auto lockFileId = processExist(argv[0]);
+  if (lockFileId == 0)
+  {
+    Button buttons[2];
+    buttons[0].label = L"Ok";
+    buttons[0].result = 0;
+    buttons[1].label = L"Cancel";
+    buttons[1].result = 1;
+    int res = Messagebox("Active windows logger", L"This application is already running, continue anyway?", buttons, 2);
+    if (res == 1)
+    {
+      return -1;
+    }
+    releaseLockFile(lockFileId, argv[0]);
+  }
 
 auto AppDataFolder = GetAppDataFolderPath();
 	if (AppDataFolder.native().size() > 0) {
@@ -216,12 +251,16 @@ auto AppDataFolder = GetAppDataFolderPath();
   // Install signal handler for SIGALRM
   signal(SIGALRM, handle_signal);
 
+  // terminate process signal
+  signal(SIGTERM, handle_signal);
+
   // Create a timer that will expire every 1 second
   struct itimerval timer;
-  timer.it_value.tv_sec = 1;
-  timer.it_value.tv_usec = 0;
-  timer.it_interval.tv_sec = 1;
-  timer.it_interval.tv_usec = 0;
+  // Установка интервала в 500 миллисекунд (0.5 секунды)
+  timer.it_interval.tv_sec = 0;       // Секунды
+  timer.it_interval.tv_usec = 500000; // Микросекунды (500 миллисекунд)
+  // Установка начального таймера (первый выстрел) на тот же интервал
+  timer.it_value = timer.it_interval;
 
   if (setitimer(ITIMER_REAL, &timer, NULL) == -1)
   {
@@ -304,11 +343,15 @@ attributes.border_pixel = border;;
     //   // Do something when screen is locked
     // }
 
-    sleep(1);
+    //sleep(1);
   }
 
   XFree(info);
   XCloseDisplay(display);
+
+// Снятие блокировки и закрытие файла
+releaseLockFile(lockFileId, argv[0]);
+ 
 
   return 0;
 }

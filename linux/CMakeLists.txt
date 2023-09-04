@@ -5,7 +5,7 @@ include(CTest)
 enable_testing()
 
 
-add_executable(ActiveWindowsLogger_Linux main.cpp utils.cpp xutils.cpp ConvertUTF.c)
+add_executable(ActiveWindowsLogger_Linux main.cpp utils.cpp xutils.cpp ConvertUTF.c messagebox.c)
 
 target_link_libraries(ActiveWindowsLogger_Linux -lXext -lX11 -lXmuu -lxcb -lxcb-icccm -lxcb-ewmh -lXss)
 

@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ActiveWindowsLogger_Linux.dir/ConvertUTF.c.o.d"
   "CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o"
   "CMakeFiles/ActiveWindowsLogger_Linux.dir/main.cpp.o.d"
+  "CMakeFiles/ActiveWindowsLogger_Linux.dir/messagebox.c.o"
+  "CMakeFiles/ActiveWindowsLogger_Linux.dir/messagebox.c.o.d"
   "CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o"
   "CMakeFiles/ActiveWindowsLogger_Linux.dir/utils.cpp.o.d"
   "CMakeFiles/ActiveWindowsLogger_Linux.dir/xutils.cpp.o"
