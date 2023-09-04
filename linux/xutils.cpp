@@ -28,8 +28,8 @@ bool getActiveWindowAndProcessName(std::string &windowTitle, std::string &proces
   xcb_intern_atom_cookie_t *atom_cookie = xcb_ewmh_init_atoms(connection, &ewmh_connection);
   if (!xcb_ewmh_init_atoms_replies(&ewmh_connection, atom_cookie, nullptr))
   {
-    //std::cerr << "Failed to initialize EWMH atoms." << std::endl;
-    return 1;
+    // std::cerr << "Failed to initialize EWMH atoms." << std::endl;
+    return false;
   }
 
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_active_window(&ewmh_connection, 0);
@@ -37,20 +37,20 @@ bool getActiveWindowAndProcessName(std::string &windowTitle, std::string &proces
   xcb_generic_error_t *error = nullptr;
   if (xcb_ewmh_get_active_window_reply(&ewmh_connection, cookie, &window, &error) != 1)
   {
-    //std::cerr << "Failed to get active window." << std::endl;
+    // std::cerr << "Failed to get active window." << std::endl;
   }
   else
   {
-    //std::cout << "Active window XID: " << window << std::endl;
-  }
+    // std::cout << "Active window XID: " << window << std::endl;
 
-  xcb_icccm_get_text_property_reply_t wm_name_reply;
-  if (xcb_icccm_get_wm_name_reply(
-          connection, xcb_icccm_get_wm_name(connection, window), &wm_name_reply, nullptr) == 1)
-  {
-    //std::cout << "Active window title: " << wm_name_reply.name << std::endl;
-    windowTitle.assign(wm_name_reply.name);
-    xcb_icccm_get_text_property_reply_wipe(&wm_name_reply);
+    xcb_icccm_get_text_property_reply_t wm_name_reply;
+    if (xcb_icccm_get_wm_name_reply(
+            connection, xcb_icccm_get_wm_name(connection, window), &wm_name_reply, nullptr) == 1)
+    {
+      // std::cout << "Active window title: " << wm_name_reply.name << std::endl;
+      windowTitle.assign(wm_name_reply.name);
+      xcb_icccm_get_text_property_reply_wipe(&wm_name_reply);
+    }
   }
 
   xcb_icccm_get_wm_class_reply_t wm_class_reply;
@@ -64,5 +64,5 @@ bool getActiveWindowAndProcessName(std::string &windowTitle, std::string &proces
 
   xcb_ewmh_connection_wipe(&ewmh_connection);
   xcb_disconnect(connection);
-  return 0;
+  return true;
 }
