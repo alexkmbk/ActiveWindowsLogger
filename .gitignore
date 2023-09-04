@@ -268,3 +268,5 @@ logs*.txt
 /WinSetup/ActiveWindowsLogger.wixpdb
 /WinSetup/ActiveWindowsLogger.wixobj
 /WinSetup/ActiveWindowsLogger.msi
+/linux/out/build/x64-Debug
+/linux/build/Testing
