@@ -269,4 +269,4 @@ logs*.txt
 /WinSetup/ActiveWindowsLogger.wixobj
 /WinSetup/ActiveWindowsLogger.msi
 /linux/out/build/x64-Debug
-/linux/build/Testing
+/linux/build
