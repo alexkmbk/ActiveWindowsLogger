@@ -270,3 +270,4 @@ logs*.txt
 /WinSetup/ActiveWindowsLogger.msi
 /linux/out/build/x64-Debug
 /linux/build
+/InfostartPackage/*
