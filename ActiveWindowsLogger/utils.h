@@ -22,3 +22,4 @@ void replaceAll(std::wstring& str, const std::wstring& from, const std::wstring&
 HWND GetRealParent(HWND hWnd);
 bool IsWindowsVersionOrGreater(WORD wMajorVersion, WORD wMinorVersion);
 std::string GetLastErrorAsString();
+std::wstring GetComputerNameStr();

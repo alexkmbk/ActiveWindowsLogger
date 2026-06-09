@@ -134,3 +134,12 @@ std::string GetLastErrorAsString() {
 
 	return message;
 }
+
+std::wstring GetComputerNameStr() {
+	wchar_t buf[MAX_COMPUTERNAME_LENGTH + 1];
+	DWORD size = ARRAYSIZE(buf);
+	if (GetComputerNameW(buf, &size)) {
+		return std::wstring(buf, size);
+	}
+	return std::wstring();
+}
