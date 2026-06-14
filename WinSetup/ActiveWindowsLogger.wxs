@@ -1,50 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-	<Product Id="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="1.0.1.1" Manufacturer="alexkmbk" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144">
-		<Package Description="Active windows logger" Comments="Active windows logger" InstallerVersion="200" Compressed="yes" />
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Package ProductCode="096547E1-13D2-4902-B42F-5A6170E8F7D9" Name="Active windows logger" Language="1033" Version="1.0.1.1" Manufacturer="alexkmbk" UpgradeCode="FA2006B6-2988-41F5-9AF4-67EA7343D144" InstallerVersion="200" Compressed="yes" Scope="perUser">
+		<SummaryInformation Description="Active windows logger" />
 		<Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder" Name="PFiles">
-				<Directory Name="ActiveWindowsLogger" Id="ACTIVEWINDOWSLOGGER">
-					<Component Id="ACTIVEWINDOWSLOGGER.EXE" DiskId="1" Guid="12CC809E-B0D2-4F08-B2BC-CF335739DB50">
-						<File Id="ACTIVEWINDOWSLOGGER.EXE" Name="ActiveWindowsLogger.exe" Source="..\Release\ActiveWindowsLogger.exe">
-							<Shortcut Id="ExeShortcut" Directory="StartupFolder" Name = "ActiveWindowsLogger.exe" Advertise="yes"> 
-							</Shortcut>  
 
-						</File>
-						<RemoveFolder Id="RemoveAppDataActiveWindowsLogger" Directory="AppDataActiveWindowsLogger" On="uninstall" />
-						<RemoveFolder Id="RemoveLogsFolder" On="uninstall" Directory="logs" />
-					</Component>
-				</Directory>
+		<StandardDirectory Id="LocalAppDataFolder">
+			<Directory Name="ActiveWindowsLogger" Id="ACTIVEWINDOWSLOGGER">
+				<Component Id="ACTIVEWINDOWSLOGGER.EXE" DiskId="1" Guid="12CC809E-B0D2-4F08-B2BC-CF335739DB50">
+					<File Id="ACTIVEWINDOWSLOGGER.EXE" Name="ActiveWindowsLogger.exe" Source="..\Release\ActiveWindowsLogger.exe">
+					</File>
+					<RegistryValue Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="ActiveWindowsLogger" Type="string" Value="&quot;[#ACTIVEWINDOWSLOGGER.EXE]&quot;" KeyPath="yes" />
+					<RemoveFolder Id="RemoveActiveWindowsLogger" On="uninstall" />
+					<RemoveFolder Id="RemoveAppDataActiveWindowsLogger" Directory="AppDataActiveWindowsLogger" On="uninstall" />
+					<RemoveFolder Id="RemoveLogsFolder" On="uninstall" Directory="logs" />
+				</Component>
 			</Directory>
-			<Directory Id="AppDataFolder" Name="AppDataFolder">
-				<Directory Id="AppDataActiveWindowsLogger" Name="ActiveWindowsLogger">
-					<Directory Id="logs" Name="logs" />
-				</Directory>
+		</StandardDirectory>
+
+		<StandardDirectory Id="AppDataFolder">
+			<Directory Id="AppDataActiveWindowsLogger" Name="ActiveWindowsLogger">
+				<Directory Id="logs" Name="logs" />
 			</Directory>
-
-			<Directory Id="StartupFolder" Name="StartupFolder"> </Directory>
-		</Directory>
-
+		</StandardDirectory>
 		<Feature Id="DefaultFeature" Title="Main Feature" Level="1">
 			<ComponentRef Id="ACTIVEWINDOWSLOGGER.EXE" />
 		</Feature>
-		<UI />	
-		<util:CloseApplication Id="CloseApp" CloseMessage="yes" Target="ActiveWindowsLogger.exe" RebootPrompt="no"/>
-		<!--<CustomAction Id="CloseTrayApp" ExeCommand="-exit" FileKey="ACTIVEWINDOWSLOGGER.EXE" Execute="immediate" Return="asyncNoWait" /> -->		
+
+		<CustomAction Id="CloseActiveWindowsLogger" FileRef="ACTIVEWINDOWSLOGGER.EXE" ExeCommand="-exit" Execute="immediate" Return="ignore" />
 		<CustomAction Id="EXECUTE_AFTER_FINALIZE"                  
               Execute="immediate" 
               Impersonate="no"
               Return="asyncNoWait"
-              FileKey="ACTIVEWINDOWSLOGGER.EXE"
+              FileRef="ACTIVEWINDOWSLOGGER.EXE"
               ExeCommand="" />
 
 		<InstallExecuteSequence>
-			<Custom Action="EXECUTE_AFTER_FINALIZE" After="InstallFinalize">NOT Installed</Custom>
+			<Custom Action="EXECUTE_AFTER_FINALIZE" After="InstallFinalize" Condition="NOT Installed" />
 		</InstallExecuteSequence>
 		
 		<InstallExecuteSequence>
-			<Custom Action="WixCloseApplications" Before="InstallValidate">REMOVE = "ALL"</Custom>
+			<Custom Action="CloseActiveWindowsLogger" Before="InstallValidate" Condition="REMOVE = &quot;ALL&quot;" />
 		</InstallExecuteSequence>
 
 		<!--		<Custom Before="InstallInitialize" Action="WixCloseApplications">REMOVE = "ALL"</Custom>
@@ -67,5 +61,5 @@
 			<Custom Action="QtExecExample" Before="InstallValidate"/>
 		</InstallExecuteSequence>
 -->	
-	</Product>
+	</Package>
 </Wix>

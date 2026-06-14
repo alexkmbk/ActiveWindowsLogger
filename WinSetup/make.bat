@@ -1,4 +1,9 @@
-del ActiveWindowsLogger.wixobj
-del ActiveWindowsLogger.wixpdb
-"C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" -ext WixUtilExtension ActiveWindowsLogger.wxs
-"C:\Program Files (x86)\WiX Toolset v3.11\bin\light.exe" -ext WixUtilExtension ActiveWindowsLogger.wixobj
+@echo off
+setlocal
+
+set "WIX=C:\Program Files\WiX Toolset v7.0\bin\wix.exe"
+
+del /q ActiveWindowsLogger.wixobj 2>nul
+del /q ActiveWindowsLogger.wixpdb 2>nul
+
+"%WIX%" build ActiveWindowsLogger.wxs -arch x86 -out ActiveWindowsLogger.msi
