@@ -20,7 +20,7 @@ BOOL AddNotificationIcon(HWND hwnd, HINSTANCE hInstance, bool bPaused, bool bUpd
 	nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP | NIF_GUID;
 	nid.guidItem = __uuidof(SystemTrayIconUUID);
 	nid.uCallbackMessage = WMAPP_NOTIFYCALLBACK;
-	LoadIconMetric(hInstance, MAKEINTRESOURCE(bPaused ? IDI_SMALL_P : IDI_SMALL), LIM_SMALL, &nid.hIcon);
+	LoadIconMetric(hInstance, MAKEINTRESOURCE(bPaused ? IDI_SMALL_P : IDI_SMALL), LIM_LARGE, &nid.hIcon);
 	LoadString(hInstance, IDS_APP_TITLE, nid.szTip, ARRAYSIZE(nid.szTip));
 	Shell_NotifyIcon(bUpdate ? NIM_MODIFY : NIM_ADD, &nid);
 
